@@ -17,8 +17,8 @@ jobs:
       - name: Build and push
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a DASHBOARD_WHITE_PAPER web
+        run: heroku container:push -a dashboard-white-paper-01 web
       - name: Release
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a DASHBOARD_WHITE_PAPER web
+        run: heroku container:release -a dashboard-white-paper-01 web
