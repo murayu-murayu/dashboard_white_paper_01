@@ -9,6 +9,7 @@ st.text('情報通信白書等から国内外のIT産業の動向が分かるデ
 
 df_department = pd.read_csv('./csv_data/department.csv', encoding='shift_jis')
 df_iot_competitiveness = pd.read_csv('./csv_data/iot_competitiveness.csv', encoding='shift_jis')
+df_iot_competitiveness_detail01 = pd.read_csv('./csv_data/iot_competitiveness_detail01.csv', encoding='shift_jis')
 
 
 # 部門別国内生産額等
@@ -34,7 +35,7 @@ fig = px.bar(df_department,
 st.plotly_chart(fig)
 
 
-# IoT国際競争力指標
+# IoT/ICT国際競争力指標
 st.header('■ IoT国際競争力指標')
 st.text('IoT・ICTの分野別の国・地域別市場シェア')
 
@@ -57,7 +58,30 @@ fig = px.treemap(df_iot_competitiveness_year,
 
 st.plotly_chart(fig)
 
+# ICT国際競争力指標_詳細1
+st.header('■ ICT国際競争力指標(詳細(抄))')
+st.text('ICTの分野別(詳細)の国・地域別市場シェア')
+
+year_list = df_iot_competitiveness_detail01["年"].unique()
+
+option_year = st.selectbox(
+    '選択',
+    (year_list))
+
+df_iot_competitiveness_detail01_year = df_iot_competitiveness_detail01[(df_iot_competitiveness_detail01["年"] == option_year)]
+
+fig = px.treemap(df_iot_competitiveness_detail01_year,
+            path=[px.Constant(option_year), '分野', '国・地域'],
+            values='シェア(%)',
+            color='国・地域',
+            color_discrete_sequence=px.colors.sequential.Blues
+            #width=1200,
+            #height=600
+            )
+
+st.plotly_chart(fig)
+
 
 st.text('■　出典：令和2年版情報通信白書(総務省)')
-st.text('■　出典：IoT国際競争力指標(2019年実績)(総務省)')
+st.text('■　出典：IoT国際競争力指標(総務省)')
 
